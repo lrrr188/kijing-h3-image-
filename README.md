@@ -39,6 +39,7 @@
 | ComfyUI-VideoHelperSuite | Kosinkadink/ComfyUI-VideoHelperSuite | `4d907be` |
 | comfyui-SelfLift | facok/comfyui-SelfLift | `835c3cf` |
 | rgthree-comfy | rgthree/rgthree-comfy | `bc48c6a` |
+| ComfyUI-H3Compat | 镜像内置（兼容 Zealman 系 H3 工作流，缺失 LoRA 会自动跳过） | — |
 
 ## 三、模型清单
 
@@ -71,7 +72,13 @@
 
 **什么都不用做。** 镜像已内置开机启动命令 `bash /root/autostart_comfyui.sh`，ComfyUI 会自动监听 6006。
 
-在实例页点 **WebUI-6006** 直接进界面，拖工作流就能出片。
+在实例页点 **WebUI-6006** 直接进界面。
+
+### 出片（第一件事）
+
+左侧边栏 **工作流** → 打开 `H3-Starter.json` → 上传一张首帧图 → 点运行。
+
+该工作流会调用镜像内的 hybrid 权重；其中 5 个可选 LoRA 若不存在，会自动跳过并在控制台打印提示，不影响出片。
 
 > 万一服务没起来（手动兜底）：
 > ```bash
