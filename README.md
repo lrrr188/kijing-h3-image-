@@ -57,17 +57,39 @@
 
 后三项是软链，指向只读的 `/.autodl-model/data/`。**创建/开机时要在「公共模型」里勾选 MiniMax-H3 相关模型**，否则软链悬空，ComfyUI 会报模型缺失。详见 [models.md](models.md)。
 
-## 四、使用步骤
+## 四、使用步骤（开机即用，无需敲任何命令）
 
-1. 在 AutoDL 控制台创建实例，镜像选「社区镜像」中的本镜像（或「共享给我的」）
-2. 勾选公共模型：`Comfy-Org/MiniMax-H3`（text_encoder + vae）
-3. 开机后执行：
-   ```bash
-   bash /root/autostart_comfyui.sh
-   tail -f /root/comfyui_autostart.log
-   ```
-4. 日志出现 `To see the GUI go to: http://0.0.0.0:6006` 即成功
-5. AutoDL「自定义服务」端口填 `6006` → 打开 WebUI
+### 创建实例时（唯一需要操作的地方，不在开机之后）
+
+| 选项 | 怎么选 | 为什么 |
+|---|---|---|
+| 镜像 | 社区镜像里的本镜像 | — |
+| 公共模型 | **勾选 MiniMax-H3**（text_encoder + vae） | 镜像里这 3 个组件是软链，19G 实体在平台公共库 |
+| 数据盘 | **≥ 50G** | 系统盘 30G 已被镜像占 25G，生成物需要落盘空间 |
+
+### 开机之后
+
+**什么都不用做。** 镜像已内置开机启动命令 `bash /root/autostart_comfyui.sh`，ComfyUI 会自动监听 6006。
+
+在实例页点 **WebUI-6006** 直接进界面，拖工作流就能出片。
+
+> 万一服务没起来（手动兜底）：
+> ```bash
+> bash /root/autostart_comfyui.sh && tail -f /root/comfyui_autostart.log
+> ```
+
+### 为什么"勾模型"这一步省不掉
+
+| 组件 | 实体体积 |
+|---|---|
+| `qwen3vl_32b_minimax_h3_nvfp4_awq`（text_encoder） | 15G |
+| `minimax_h3_video_vae_int8_convrot` | 3.0G |
+| `minimax_h3_audio_vae_fp32` | 578M |
+| **合计** | **19G** |
+
+镜像已占 25G，30G 系统盘装不下 25+19=44G。所以这 3 个组件只能走平台公共模型挂载——勾选动作发生在创建实例页面，和选镜像同一个页面，**开机后确实什么都不需要做**。
+
+若确实要求连勾选都省掉，唯一办法是把系统盘扩到 60G 并把 19G 实体打进镜像，代价是镜像变成 ~44G（超出免费额度）且对方开实例也得多买系统盘。
 
 ## 五、常见问题
 

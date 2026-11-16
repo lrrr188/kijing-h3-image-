@@ -60,6 +60,8 @@ gh repo create kijing-h3-image --public --source=. --push
 | 启动命令 | `bash /root/autostart_comfyui.sh` |
 | 端口 | `6006` |
 | 显存要求 | ≥ 24G |
+| 数据盘 | 建议 ≥ 50G（系统盘被镜像占 25G） |
+| 公共模型 | 需勾选 MiniMax-H3（text_encoder + vae），否则软链悬空 |
 | 说明 | 直接把 README 里「使用步骤 + 常见问题」两节贴过去 |
 
 4. 提交 → 等审核 → 通过后出现在「社区镜像」，任何人创建实例时都能选
