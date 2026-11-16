@@ -1,0 +1,21 @@
+# 权重与生成物不上仓库
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+models/
+output/
+input/
+*.mp4
+*.webm
+*.mov
+
+# 运行时产物
+__pycache__/
+*.pyc
+.DS_Store
+*.log
+h3out/
+tmp/
